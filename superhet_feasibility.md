@@ -53,7 +53,19 @@ For the drone mesh system, the concept would be to place a **superheterodyne up/
 * Building a custom transverter adds cost: besides the Wi-Fi radio, you must source and assemble an LO synthesiser, mixer, filters, amplifiers and shielding.  Many of these components — especially high-frequency mixers and PLLs — are expensive and require careful PCB layout.  Mass-market 802.11 ah modules that already operate in the 865–868 MHz band may be cheaper and simpler.
 * Regulatory compliance costs (testing, certification) can exceed the cost of the converter itself.  If the goal is to operate in the 865–868 MHz band, using COTS HaLow modules such as Doodle Labs 860 MHz transceiver may be more straightforward.
 
-Given these considerations, **using a superheterodyne frequency converter to repurpose a 5.8 GHz Qualcomm Wi-Fi chipset for 865–868 MHz operation is technically possible but highly complex and generally not practical**.  It is better to use purpose-built radios (e.g., 802.11 ah or LoRa) for low-frequency links, while retaining the 5.8 GHz mesh for high-throughput backhaul.
+Giv
+### SDR and FPGA‑Based Tunable RF Front Ends
+
+An alternative to a discrete superheterodyne converter is to use **software‑defined radio (SDR)** chips that integrate the RF front end, frequency synthesizers and data converters into one package. These chips expose a digital I/Q interface that can be connected to an FPGA for flexible baseband processing. Examples include:
+
+* **Analog Devices AD9361** – This highly integrated transceiver contains dual independent transmit and receive channels with 12‑bit ADC/DACs. The receiver covers **70 MHz–6 GHz** and the transmitter covers **47 MHz–6 GHz**; the tunable channel bandwidth is up to **56 MHz**. Integrated fractional‑N synthesizers generate LOs for both paths, and the device is packaged in a **10 mm × 10 mm** chip‑scale BGA【494275668734146†L14-L50】【494275668734146†L74-L79】. The AD9361 effectively combines a tunable RF front end with a flexible mixed‑signal baseband that can be interfaced directly to an FPGA【494275668734146†L39-L50】.
+
+* **Lime Microsystems LMS7002M** – This full‑duplex transceiver provides continuous coverage from **100 kHz to 3.8 GHz** with programmable modulation bandwidth up to **120 MHz (analog) or 56 MHz (digital)**. It integrates **12‑bit ADC/DAC converters, fractional‑N PLLs**, calibration circuits and a microcontroller in an **11.5 mm × 11.5 mm** aQFN package【710745085554493†L7-L57】【710745085554493†L57-L63】. The LMS7002M includes LNAs, mixers, filters, synthesizers and requires few external components【710745085554493†L192-L205】. Its digital interface can be connected to an FPGA for custom baseband processing.
+
+* **Qorvo RFFC2072** – This re‑configurable frequency conversion device contains a fractional‑N PLL synthesizer, VCO and high‑linearity mixer. It can generate local oscillators between **85 MHz and 2700 MHz** and up/down convert RF signals from **30 MHz to 2700 MHz**. The device is controlled via a simple 3‑wire serial interface and is available in a **5 mm × 5 mm** QFN package【284687923675379†L474-L521】. While not a complete SDR, it can serve as a tunable RF front end when paired with an FPGA.
+
+Using an integrated SDR front end removes the need for an external LO, mixer and filters and simplifies the design. The **FPGA handles modulation/demodulation**, packet processing and mesh networking, while the SDR chip performs frequency synthesis and analog RF processing. Such devices are commercially available, have undergone regulatory certification and are already used in compact radios and UAV payloads. Therefore, they provide a feasible path to a **frequency‑agile mesh network** without the complexity of a custom superheterodyne transverter.
+en these considerations, **using a superheterodyne frequency converter to repurpose a 5.8 GHz Qualcomm Wi-Fi chipset for 865–868 MHz operation is technically possible but highly complex and generally not practical**.  It is better to use purpose-built radios (e.g., 802.11 ah or LoRa) for low-frequency links, while retaining the 5.8 GHz mesh for high-throughput backhaul.
 
 ## Build Steps (Hypothetical)
 
