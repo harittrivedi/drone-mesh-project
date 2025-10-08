@@ -97,7 +97,10 @@ The table below lists essential components needed for a superheterodyne frequenc
 | **Power amplifier (PA)** | Qorvo **RFPA5522** (865 MHz) or custom 868 MHz PA | Boosts the converted 865 MHz transmit signal to the required power |
 | **Directional coupler / Diplexer** | 3 dB hybrid or RF switch | Separates transmit and receive paths and routes signals appropriately |
 | **Control MCU/FPGA** | STM32 microcontroller or small FPGA | Controls the LO synthesiser, switching and monitors system status |
-| **Support components** | RF shielding cans, SMA connectors, power regulators | Provide mechanical and electrical integration |
+|*
+|**Integrated SDR transceiver** | ADI **AD9361** or Lime **LMS7002M** | Highly integrated RF front-end with tunable synthesizers, LNAs, mixers and 12‑bit ADC/DAC; covers 70 MHz–6 GHz (AD9361) or 100 kHz‑3.8 GHz (LMS7002M) and connects to an FPGA for digital baseband |
+| **Reconfigurable frequency converter** | Qorvo **RFFC2072** | Fractional‑N PLL synthesizer, VCO and high‑linearity mixer; generates LO 85–2700 MHz and up/down converts RF signals 30–2700 MHz; provides a compact tunable RF front end |
+*Support components** | RF shielding cans, SMA connectors, power regulators | Provide mechanical and electrical integration |
 
 ## Conclusion
 
